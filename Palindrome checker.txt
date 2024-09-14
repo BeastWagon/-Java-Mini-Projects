@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+class PalindromeChecker {
+
+    public static String reverseString(String str) {
+        char ch[] = str.toCharArray();
+        String reverse = "";
+        for (int i = ch.length - 1; i >= 0; i--) {
+            reverse += ch[i];
+        }
+        return reverse;
+    }
+
+    public static void main(String args[]) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Enter the string to be checked:");
+            String str = scanner.nextLine();
+            
+            String reverse = PalindromeChecker.reverseString(str);
+
+            if (str.equals(reverse)) {
+                System.out.println("The given string is a palindrome");
+            } else {
+                System.out.println("The given string is not a palindrome");
+            }
+        }
+    }
+}

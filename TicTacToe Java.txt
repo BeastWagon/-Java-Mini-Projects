@@ -1,0 +1,179 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+class TicTacToe{
+    static ArrayList<Integer> player1position=new ArrayList<Integer>();
+    static ArrayList<Integer> player2position=new ArrayList<Integer>();
+    public static void main(String[] args){
+        char[][] gameBoard={{' ',' ' ,' '},
+                           {' ',' ',' '},
+                           {' ',' ',' '}};
+       
+        int Player1score=0;int Player2score=0;
+        String results;
+        int round;
+         Scanner scanner=new Scanner(System.in);
+            
+        for(int i=1;i<6;i++){
+            printGameBoard(gameBoard);
+
+            round=i;
+          System.out.print(round+" Round Begins");  
+        while (true) { 
+
+            System.out.println();
+           
+             System.out.println("Player1 enter your position(1-9)");
+             int position1=scanner.nextInt();
+             System.out.println(position1);
+             placeValue(gameBoard, position1, "player1");
+             printGameBoard(gameBoard);
+             results = checkWinner();
+             if(!results.isEmpty()){
+                System.out.println(results);
+                resetBoard(gameBoard);
+                break;
+             }
+
+
+             
+             System.out.println("Player2 enter your position(1-9)");
+             int position2=scanner.nextInt();
+             System.out.println(position2);
+             placeValue(gameBoard, position2, "player2");
+             printGameBoard(gameBoard);
+             results = checkWinner();
+             if(!results.isEmpty()){
+                System.out.println(results);
+                resetBoard(gameBoard);
+                break;
+             }
+
+             
+             
+        }
+    
+        if(results.equals("Player 1 wins")){
+            Player1score=Player1score+1;
+        }
+        else if(results.equals("Player 2 wins")){
+            Player2score=Player2score+1;
+        }
+        System.out.println("Player 1 Score"+Player1score);
+        System.out.println("Player 2 Score"+Player2score);
+        
+
+        }
+        if(Player1score>Player2score)System.out.println("Player 1 wins the GAME!!");
+        else if(Player2score>Player1score)System.out.println("Player 2 wins the GAME!!");
+        else if(Player1score==Player2score)System.out.println("The game is DRAW!!!");
+                        
+       
+    }
+     public static void printGameBoard(char[][] gameBoard){
+            System.out.println();
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    System.out.print(" "+gameBoard[i][j]);
+                    if(j<2)
+                    System.out.print(" |");
+                    
+                }
+                System.out.println();
+                if(i<2)System.out.print("___|___|___");
+                 System.out.println();
+            }
+            System.out.println();
+     }
+      public static void resetBoard(char[][] gameBoard){
+        for(int i=0;i<3;i++){
+            Arrays.fill(gameBoard[i],' ');
+        }
+        player1position.clear();
+        player2position.clear();
+
+     }       
+     public static void placeValue(char[][] gameBoard,int position,String user){
+        char symbol=' ';
+        if(user.equals("player1")){
+            symbol='X';
+            player1position.add(position);
+        }
+        else if(user.equals("player2")){
+            symbol='O';
+            player2position.add(position);
+        }
+         switch (position) {
+            case 1:
+                gameBoard[0][0]=symbol;
+                break;
+            case 2:
+                gameBoard[0][1]=symbol;
+                break;
+            case 3:
+                gameBoard[0][2]=symbol;
+                break;
+            case 4:
+                gameBoard[1][0]=symbol;
+                break;
+            case 5:
+                gameBoard[1][1]=symbol;
+                break;
+            case 6:
+                gameBoard[1][2]=symbol;
+                break;
+            case 7:
+                gameBoard[2][0]=symbol;
+                break;
+            case 8:
+                gameBoard[2][1]=symbol;
+                break;
+            case 9:
+                gameBoard[2][2]=symbol;
+                break;
+            default:
+                break;                            
+         }  
+
+     }      
+     public static String checkWinner(){
+        List toprow=Arrays.asList(1,2,3);
+        List midrow=Arrays.asList(4,5,6);
+        List botrow=Arrays.asList(7,8,9);
+        List leftcol=Arrays.asList(1,4,7);
+        List midcol=Arrays.asList(2,5,8);
+        List rightcol=Arrays.asList(3,6,9);
+         List cross1=Arrays.asList(1,5,9);
+        List cross2=Arrays.asList(3,5,7);
+
+        List<List> winner=new ArrayList<List>();
+        winner.add(toprow);
+        winner.add(midrow);
+        winner.add(botrow);
+        winner.add(leftcol);
+        winner.add(midcol);
+        winner.add(rightcol);
+        winner.add(cross1);
+        winner.add(cross2);
+
+        for(List l:winner){
+            if(player1position.containsAll(l)){
+                System.out.println("Player 1 wins");
+                break;
+            }
+            else if(player2position.containsAll(l)){
+                System.out.println("Player 2 wins");
+                break;
+            }
+            else if(player1position.size()+player2position.size() ==9){
+                System.out.println("DRAW!!");
+                break;
+            }
+        }
+        return "";
+     }    
+     
+
+}
